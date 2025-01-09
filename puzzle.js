@@ -1,102 +1,20 @@
-// Snippets de código para poder componer el programa
-
-//Usado?: 
-  const middlewares = require('./middlewares');
-//--- Explicación: 
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const bodyParser = require('body-parser');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const session = require('express-session');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const express = require('express');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const bodyParser = require('body-parser');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const session = require('express-session');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const dotenv = require('dotenv');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
 const middlewares = require('./middlewares');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const routes = require('./routes');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-dotenv.config();
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const app = express();
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
-const PORT = 4000;
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?: 
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 const dotenv = require('dotenv');
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?:
+const middlewares = require('./middlewares');
+const routes = require('./routes');
 dotenv.config();
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
-
-//Usado?:
+const app = express();
+const PORT = 4000;
+const dotenv = require('dotenv');
+dotenv.config();
 middlewares.setupApp(app);
-//--- Explicación: 
-
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 routes.setup(app);
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 const validarPalabraMiddleware = (req, res, next) => {
   const palabraCorrecta = process.env.PALABRA_SECRETA || '';
 
@@ -107,13 +25,7 @@ const validarPalabraMiddleware = (req, res, next) => {
     res.redirect('/?error=1');
   }
 };
-//--- Explicación: 
 
-
-// -------------------------------------------------------------------------------------
-
-
-//Usado?:
 const setup = (app) => {
   app.get('/', (req, res) => {
     const mensajeError = req.query.error
@@ -122,15 +34,8 @@ const setup = (app) => {
     if (req.session.palabraSecreta) {
       return res.redirect('/profile');
     }
-  //Aquí va código dentro
 })}
-//--- Explicación: 
 
-
-// -------------------------------------------------------------------------------------
-
-
-//Usado?:
 res.send(`
   <html>
     <body>
@@ -144,11 +49,6 @@ res.send(`
     </body>
   </html>
 `);
-//--- Explicación: 
-
-
-// -------------------------------------------------------------------------------------
-
 
 const setupAPP = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -159,7 +59,6 @@ const setupAPP = (app) => {
   }));
 };
 
-//Usado?:
 app.post('/profile', middlewares.validarPalabraMiddleware, (req, res) => {
   res.send(`
     <h1>Ruta del Perfil</h1>
@@ -168,37 +67,21 @@ app.post('/profile', middlewares.validarPalabraMiddleware, (req, res) => {
     </form>
   `);
 });
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 app.use(session({
   secret: process.env.PALABRA_SECRETA || 'secretoSuperSecreto',
   resave: false,
   saveUninitialized: true,
 }));
 
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en http://localhost:${PORT}`);
 });
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 const verificarSesionMiddleware = (req, res, next) => {
   if (req.session.palabraSecreta) {
     next();
@@ -206,12 +89,7 @@ const verificarSesionMiddleware = (req, res, next) => {
     res.redirect('/?error=2');
   }
 };
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-
-//Usado?:
 app.get('/profile', middlewares.verificarSesionMiddleware, (req, res) => {
   res.send(`
     <h1>Ruta del Perfil (Sesión activa)</h1>
@@ -220,12 +98,7 @@ app.get('/profile', middlewares.verificarSesionMiddleware, (req, res) => {
     </form>
   `);
 });
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-
-//Usado?:
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -234,25 +107,14 @@ app.post('/logout', (req, res) => {
     res.redirect('/');
   });
 });
-//--- Explicación: 
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 module.exports = {
   setup,
 };
-//--- Explicación:
 
-// -------------------------------------------------------------------------------------
-
-//Usado?:
 module.exports = {
   validarPalabraMiddleware,
   verificarSesionMiddleware,
   setupAPP,
 };
-//--- Explicación:
-
-// -------------------------------------------------------------------------------------
 
